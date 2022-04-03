@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using static HealthPlayer1;
+using static HealthPlayer2;
+using static Counter;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,9 +12,12 @@ public class PlayerController : MonoBehaviour
     public GameObject bullet;
     public bool player1;
     public bool player2;
+    private AudioSource blaster;
     
     void Start()
     {
+        blaster = this.GetComponentInChildren<AudioSource>();
+        
     }
 
     void Update()
@@ -35,6 +42,7 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyDown("space")) {
                 Instantiate(bullet, transform.position, Quaternion.identity);
+                blaster.Play();
             }
 
         }
@@ -59,16 +67,26 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyDown("right ctrl")) {
                 Instantiate(bullet, transform.position, Quaternion.identity);
+                blaster.Play();
             }
 
         }
 
+        if (HealthPlayer1.health <= 0 || HealthPlayer2.health <= 0 || Counter.currentTime <= 0 ) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+
     }
 
-        void OnTriggerEnter2D(Collider2D collision) {
+
+    void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag == "EnemyBullet" || collision.gameObject.tag == "Asteroid"
         || collision.gameObject.tag == "Enemy") {
-            Destroy(this.gameObject);
+            if (player1) {
+                HealthPlayer1.Damage(20);
+            } else {
+                HealthPlayer2.Damage(20);
+            }
             Destroy(collision.gameObject);
         }
     }

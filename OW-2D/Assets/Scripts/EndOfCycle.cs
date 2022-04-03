@@ -15,7 +15,6 @@ public class EndOfCycle : MonoBehaviour
         currentTime = startingTime;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Timer();

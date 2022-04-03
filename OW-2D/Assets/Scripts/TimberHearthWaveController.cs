@@ -56,7 +56,6 @@ public class TimberHearthWaveController : MonoBehaviour
             yield return new WaitForSeconds(2f);
             Asteroid();
         }
-
     }
 
     private void Enemie() {
