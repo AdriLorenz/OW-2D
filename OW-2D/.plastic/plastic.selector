@@ -1,4 +1,0 @@
-repository "OW-2D@Travelers@cloud"
-  path "/"
-    br "/main"
-    co "/main"

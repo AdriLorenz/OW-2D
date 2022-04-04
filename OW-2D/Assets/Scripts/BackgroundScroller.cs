@@ -21,6 +21,5 @@ public class BackgroundScroller : MonoBehaviour
     {
         newPos = Mathf.Repeat (Time.time * scrollSpeed, scrollOffset);
         transform.position = startPos + Vector2.down * newPos;
-        Debug.Log("Pepe: " + newPos);
     }
 }

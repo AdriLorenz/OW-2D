@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
 {
     public GameObject bullet;
     private AudioSource explosion;
+    public GameObject explosionEffect;
     
     void Start()
     {
@@ -18,7 +19,8 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.tag == "Bullet") {
             Counter.currentTime += 3;
             Destroy(this.gameObject);
-            explosion.Play();
+            GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity) as GameObject;
+            Destroy(explosion, 0.2f);
             Destroy(collision.gameObject);
         }
     }

@@ -9,22 +9,22 @@ public class TimberHearthWaveController : MonoBehaviour
     public GameObject asteroidPrefab;
     private Vector2 screenBounds;
     private int counter;
+    private float spawnDelay;
 
     private int previusCycle;
 
     void Start()
     {
         counter = 0;
+        spawnDelay= 2.5f;
         previusCycle = EndOfCycle.cycleNumber;
 
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z ));
-        StartCoroutine (StartWaves());
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(EndOfCycle.currentTime);
         if ((int)EndOfCycle.currentTime == 5 && counter == 0) {
             StartCoroutine (Wave1());
             counter++;
@@ -36,24 +36,25 @@ public class TimberHearthWaveController : MonoBehaviour
             StartCoroutine (Wave2());
             counter++;
         }
-    }
 
-    IEnumerator StartWaves() {
-        Debug.Log("waiting");
-        yield return new WaitForSeconds (10f);
+        if ((int)EndOfCycle.currentTime / 20 == 2 || (int)EndOfCycle.currentTime / 20 == 3 || 
+        (int)EndOfCycle.currentTime / 20 == 4 || (int)EndOfCycle.currentTime / 20 == 5 ) {
+            spawnDelay -= 0.25f;
+        }
+
+        Debug.Log(spawnDelay);
     }
 
     IEnumerator Wave1() {
         while (true) {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(spawnDelay);
             Enemie();
         }
-
     }
 
     IEnumerator Wave2() {
         while (true) {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(spawnDelay);
             Asteroid();
         }
     }
